@@ -1,0 +1,6 @@
+log1: User logged in
+log2: File uploaded
+log3: Settings updated
+log1: User logged in
+log2: File uploaded
+log3: Settings updated
