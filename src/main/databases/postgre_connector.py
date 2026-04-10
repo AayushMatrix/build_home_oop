@@ -38,9 +38,11 @@ class PostgresCRUDOperation:
         try:
               with self.connection.cursor() as cursor:
                     if params:
+                         logger.info(f"Query sent to read\n{cursor.mogrify(query,params).decode('utf-8')}")
                          cursor.execute(query,params)
                     else:
                          cursor.execute(query)
+                         
                     return cursor.fetchall()      
 
         except Exception as error:
