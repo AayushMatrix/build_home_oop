@@ -6,3 +6,12 @@ create table labours(
     role        VARCHAR(50),
     email       VARCHAR(100)
 );
+
+
+CREATE TABLE attendance (
+    id         INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    labour_id  INTEGER NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time   TIMESTAMP,
+    FOREIGN KEY (labour_id) REFERENCES labours(id)
+);
