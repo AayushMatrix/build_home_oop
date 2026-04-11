@@ -15,3 +15,11 @@ CREATE TABLE attendance (
     end_time   TIMESTAMP,
     FOREIGN KEY (labour_id) REFERENCES labours(id)
 );
+
+
+CREATE TABLE skills (
+    id         INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    labour_id  INTEGER NOT NULL,
+    skill varchar(100)
+    FOREIGN KEY (labour_id) REFERENCES labours(id)
+);
