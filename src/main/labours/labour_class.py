@@ -1,14 +1,24 @@
 from loguru import logger
 from datetime import datetime
 
-class Labour:
-    def __init__(self,first_name,last_name,wage,role,crud):
+
+
+class Person:
+    def __init__(self,first_name,last_name):
         self.first_name = first_name
         self.last_name = last_name
+        self.email = self.first_name + "." + self.last_name + "@gmail.com"
+
+    def print_detail(self):
+        return f"Your first name is set as {self.first_name} and last name is {self.last_name} with email id as {self.email}"
+
+class Labour(Person):
+    def __init__(self,first_name,last_name,wage,role,crud):
+        super().__init__(first_name,last_name)
         self.wage = wage 
         self.role = role
         self.crud = crud
-        self.__save_to_databse(self.crud)    
+        self.id = self.__save_to_databse(self.crud)    
        
 
     def __save_to_databse(self,crud):
@@ -23,9 +33,8 @@ class Labour:
                          VALUES(%s,%s,%s,%s,%s)
         RETURNING id
         """
-        email = self.first_name + "." + self.last_name + "@gmail.com"
-        
-        insert_result = crud.insert_from_pos(insert_query,(self.first_name,self.last_name,self.wage,self.role,email))
+
+        insert_result = crud.insert_from_pos(insert_query,(self.first_name,self.last_name,self.wage,self.role,self.email))
         
         # new_id = insert_result[0][0]
         # logger.info(f"New labour added with ID: {new_id}")
@@ -89,19 +98,16 @@ class Labour:
         except Exception as e:
             logger.error(f"Error in login_and_logout: {e}")
 
+class Mistri(Labour):
+    def __init__(self, first_name, last_name, wage, role,skill, crud):
+        super().__init__(first_name, last_name, wage, role, crud)
+        self.skill = skill
+        self.__save_to_skill_table()
 
-
-# config = configparser.ConfigParser()
-# config.read(r"C:\Users\Aayush-Gyawali\Desktop\python\src\resources\config_file.ini")
-
-# postgre_d b_conn_obj = PostgresConnection(config)
-# postgre_db_conn_obj.connect()
-
-# crud = PostgresCRUDOperation(postgre_db_conn_obj.connection)
-
-# mansih_obj = Labour("manish","kumar",500)
-# mansih_obj.save_to_databse(crud)
-
-# ram = Labour("Ram","Sing",400)
-# print(mansih._Labour__wage)
-# print(ram.total_count)
+    def __save_to_skill_table(self):
+        insert_query = """ INSERT INTO skills(labour_id,skill)
+                           VALUES(%s,%s)
+                         """
+        for skill in self.skill:
+            self.crud.insert_from_pos(insert_query,(self.id,skill))
+            logger.info(f"Skill '{skill}' saved for labour ID {self.id}")
