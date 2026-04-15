@@ -20,6 +20,6 @@ CREATE TABLE attendance (
 CREATE TABLE skills (
     id         INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     labour_id  INTEGER NOT NULL,
-    skill varchar(100)
+    skill varchar(100),
     FOREIGN KEY (labour_id) REFERENCES labours(id)
 );
