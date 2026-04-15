@@ -2,13 +2,22 @@ from loguru import logger
 import psycopg2
 import psycopg2.extras
 
-
-conn = None
-
 class PostgresConnection:
+    _instance = None 
+
     def __init__(self,config):
-          self.config = config
-          self.connection = None 
+        if PostgresConnection._instance is not None:
+          raise Exception("Use get_insance() instread of creating new obj")
+        
+        self.config = config
+        self.connection = None 
+        self.connect()
+    
+    @classmethod 
+    def get_instance(cls, config = None):
+        if cls._instance is None:
+            cls._instance = cls(config)
+        return cls._instance
 
     def connect(self):
         try:     
@@ -41,6 +50,7 @@ class PostgresCRUDOperation:
                          logger.info(f"Query sent to read\n{cursor.mogrify(query,params).decode('utf-8')}")
                          cursor.execute(query,params)
                     else:
+                         logger.info(f"Query sent to read\n{query}")
                          cursor.execute(query)
                          
                     return cursor.fetchall()      
