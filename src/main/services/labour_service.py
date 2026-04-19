@@ -7,7 +7,6 @@ class LabourServices:
 
     def create_labour(self, labour):
 
-        # 🔍 Check if user already exists
         check_query = """
         SELECT id FROM labours
         WHERE lower(first_name) = %s
@@ -23,7 +22,6 @@ class LabourServices:
             logger.info("User already exists")
             return result[0][0]
 
-        # ✅ Insert if not exists
         insert_query = """
         INSERT INTO labours(first_name, last_name, wage, role, email)
         VALUES (%s, %s, %s, %s, %s)

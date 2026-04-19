@@ -23,15 +23,15 @@ def create_user(first_name, last_name, wage, role):
     return f"Labour created with ID: {labour_id}"
 
 
-def login_logout(labour_id=None, first_name=None, last_name=None):
-    attendance_services = AttendanceServices(db.connection)
-    attendance_services.login_logout(labour_id, first_name, last_name)
-    return "Attendance recorded successfully"
+# def login_logout(labour_id=None, first_name=None, last_name=None):
+#     attendance_services = AttendanceServices(db.connection)
+#     attendance_services.login_logout(labour_id, first_name, last_name)
+#     return "Attendance recorded successfully"
 
 
 def main():
-    logger.info(create_user("Kartik","Sham",500,"labour"))
-    logger.info(login_logout(first_name="Ram", last_name="Sham"))
+    logger.info(create_user("Hari","Sham",500,"labour"))
+    # logger.info(login_logout(first_name="Ram", last_name="Sham"))
 
 
 if __name__ == "__main__":
