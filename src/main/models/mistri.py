@@ -3,8 +3,8 @@ from src.main.models.labour import Labour,logger
 
 
 class Mistri(Labour):
-    def __init__(self, first_name, last_name, wage, role,skill, crud):
-        super().__init__(first_name, last_name, wage, role, crud)
+    def __init__(self, first_name, last_name, wage, role,skill):
+        super().__init__(first_name, last_name, wage, role)
         self.skill = skill
         self.__save_to_skill_table()
 
