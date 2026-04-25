@@ -20,8 +20,9 @@ class LabourServices:
         )
 
         if result:
+            raise ValueError(f"User already exists with ID {result[0][0]}")
             # return result[0][0]
-            return {"message": "User already exists", "id": result[0][0]}
+            # return {"message": "User already exists", "id": result[0][0]}
 
         insert_query = """
         INSERT INTO labours(first_name, last_name, wage, role, email)
@@ -41,6 +42,7 @@ class LabourServices:
         )
         logger.info(f"Query:- {insert_query} values:- {result}")
         labbour_id =  result[0][0]
+
     
         if hasattr(labour,'skill') and labour.skill:
             skill_query = """INSERT INTO skills(labour_id,skill)
@@ -48,7 +50,8 @@ class LabourServices:
             
             for skill in labour.skill:
                 self.crud.insert_from_pos(skill_query,(labbour_id,skill))
-
+                
+        return labbour_id
 
     def get_labour(self, labour_id):
 
